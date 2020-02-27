@@ -55,13 +55,16 @@ describe 'Bitmap Editor' do
       end
     end
 
-    context 'C command' do
+    context 'Any command except I' do
       it 'gets RuntimeError when bitmap is missing' do
         bitmap_editor = BitmapEditor.new
         error_message = "Without bitmap can't execute command"
-        expect { bitmap_editor.execute('C', []) }.to raise_error(RuntimeError, error_message)
+        expect { bitmap_editor.execute('V', %w[2 3 6 W]) }.to raise_error(RuntimeError,
+                                                                          error_message)
       end
+    end
 
+    context 'C command' do
       it 'gets ArgumentError when argument size is wrong' do
         bitmap_editor = BitmapEditor.new
         bitmap_editor.execute('I', %w[3 3])
@@ -84,13 +87,6 @@ describe 'Bitmap Editor' do
     end
 
     context 'L command' do
-      it 'gets RuntimeError when bitmap is missing' do
-        bitmap_editor = BitmapEditor.new
-        error_message = "Without bitmap can't execute command"
-        expect { bitmap_editor.execute('L', %w[1 3 A]) }.to raise_error(RuntimeError,
-                                                                        error_message)
-      end
-
       it 'gets ArgumentError when argument size is wrong' do
         bitmap_editor = BitmapEditor.new
         bitmap_editor.execute('I', %w[3 3])
@@ -106,6 +102,27 @@ describe 'Bitmap Editor' do
         expect(image).to eq(empty_bitmap)
         painted_bitmap = [%w[0 0 0 0], %w[0 0 0 0], %w[0 A 0 0]]
         bitmap_editor.execute('L', %w[2 3 A])
+        expect(image).to eq(painted_bitmap)
+      end
+    end
+
+    context 'V command' do
+      it 'gets ArgumentError when argument size is wrong' do
+        bitmap_editor = BitmapEditor.new
+        bitmap_editor.execute('I', %w[3 3])
+        error_message = 'Command V is accepting 4 arguments. But input file send 3 arguments'
+        expect { bitmap_editor.execute('V', %w[2 3 W]) }.to raise_error(ArgumentError,
+                                                                        error_message)
+      end
+
+      it 'gets successful with arguments in range' do
+        bitmap_editor = BitmapEditor.new
+        empty_bitmap = [%w[0 0 0 0], %w[0 0 0 0], %w[0 0 0 0]]
+        bitmap_editor.execute('I', %w[4 3])
+        image = bitmap_editor.instance_variable_get(:@bitmap).instance_variable_get(:@image)
+        expect(image).to eq(empty_bitmap)
+        painted_bitmap = [%w[0 P 0 0], %w[0 P 0 0], %w[0 P 0 0]]
+        bitmap_editor.execute('V', %w[2 1 3 P])
         expect(image).to eq(painted_bitmap)
       end
     end

@@ -18,7 +18,14 @@ class Bitmap
     @image[y_coor.to_i - 1][x_coor.to_i - 1] = colour if valid_pixel?(x_coor, y_coor)
   end
 
-  # Command V
+  def paint_vertical(x_coor, y1_coor, y2_coor, colour)
+    return unless valid_pixel?(x_coor, y1_coor) && valid_pixel?(x_coor, y2_coor)
+
+    (y1_coor.to_i..y2_coor.to_i).each do |i|
+      @image[i - 1][x_coor.to_i - 1] = colour
+    end
+  end
+
   # Command H
   # Command S
 

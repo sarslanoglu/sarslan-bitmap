@@ -90,4 +90,31 @@ describe 'Bitmap' do
       expect(bitmap.instance_variable_get(:@image)).to eq(painted_bitmap)
     end
   end
+
+  context '.paint_vertical' do
+    it 'gives error if allowed x coordinate is passed' do
+      bitmap = Bitmap.new(3, 2)
+      error_message = <<~HEREDOC
+        Given x coordinate of 10 is out of boundries. Please provide a number between 1 and 2.
+      HEREDOC
+      expect { bitmap.paint_vertical(10, 2, 5, 'S') }.to raise_error(ArgumentError, error_message)
+    end
+
+    it 'gives error if allowed y coordinate is passed' do
+      bitmap = Bitmap.new(3, 2)
+      error_message = <<~HEREDOC
+        Given y coordinate of 5 is out of boundries. Please provide a number between 1 and 3.
+      HEREDOC
+      expect { bitmap.paint_vertical(2, 2, 5, 'S') }.to raise_error(ArgumentError, error_message)
+    end
+
+    it 'paints one line on bitmap' do
+      bitmap = Bitmap.new(3, 2)
+      clear_bitmap = [%w[0 0], %w[0 0], %w[0 0]]
+      expect(bitmap.instance_variable_get(:@image)).to eq(clear_bitmap)
+      bitmap.paint_vertical(1, 1, 3, 'B')
+      painted_bitmap = [%w[B 0], %w[B 0], %w[B 0]]
+      expect(bitmap.instance_variable_get(:@image)).to eq(painted_bitmap)
+    end
+  end
 end

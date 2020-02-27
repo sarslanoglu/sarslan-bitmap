@@ -34,7 +34,10 @@ class BitmapEditor
       validate_command(command, arguments, 3)
       @bitmap.paint_pixel(*arguments)
     when 'V'
-      # Command V
+      raise "Without bitmap can't execute command" unless @bitmap
+
+      validate_command(command, arguments, 4)
+      @bitmap.paint_vertical(*arguments)
     when 'H'
       # Command H
     when 'S'
@@ -47,8 +50,9 @@ class BitmapEditor
   private
 
   def validate_command(command, arguments, number_of_arg)
-    if arguments.size != number_of_arg
-      raise ArgumentError, "Command #{command} is accepting #{number_of_arg} arguments. But input file send #{arguments.size} arguments"
-    end
+    return unless arguments.size != number_of_arg
+
+    raise ArgumentError, "Command #{command} is accepting #{number_of_arg} arguments."\
+    " But input file send #{arguments.size} arguments"
   end
 end
