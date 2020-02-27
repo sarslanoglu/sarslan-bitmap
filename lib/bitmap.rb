@@ -26,7 +26,14 @@ class Bitmap
     end
   end
 
-  # Command H
+  def paint_horizontal(x1_coor, x2_coor, y_coor, colour)
+    return unless valid_pixel?(x1_coor, y_coor) && valid_pixel?(x2_coor, y_coor)
+
+    (x1_coor.to_i..x2_coor.to_i).each do |i|
+      @image[y_coor.to_i - 1][i - 1] = colour
+    end
+  end
+
   # Command S
 
   private
