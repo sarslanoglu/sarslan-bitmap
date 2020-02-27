@@ -16,44 +16,71 @@ class BitmapEditor
     file.readlines.map(&:chomp)
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # Default complexity is 6, below code's complexity is 7
   def execute(command, arguments)
     case command
     when 'I'
-      raise 'Bitmap already created' if @bitmap
-
-      validate_command(command, arguments, 2)
-      @bitmap = Bitmap.new(arguments[1].to_i, arguments[0].to_i)
+      create_bitmap(command, arguments)
     when 'C'
-      raise "Without bitmap can't execute command" unless @bitmap
-
-      validate_command(command, arguments, 0)
-      @bitmap.clear
+      clear_bitmap(command, arguments)
     when 'L'
-      raise "Without bitmap can't execute command" unless @bitmap
-
-      validate_command(command, arguments, 3)
-      @bitmap.paint_pixel(*arguments)
+      paint_pixel_on_bitmap(command, arguments)
     when 'V'
-      raise "Without bitmap can't execute command" unless @bitmap
-
-      validate_command(command, arguments, 4)
-      @bitmap.paint_vertical(*arguments)
+      paint_vertical_on_bitmap(command, arguments)
     when 'H'
-      raise "Without bitmap can't execute command" unless @bitmap
-
-      validate_command(command, arguments, 4)
-      @bitmap.paint_horizontal(*arguments)
+      paint_horizontal_on_bitmap(command, arguments)
     when 'S'
-      raise "Without bitmap can't execute command" unless @bitmap
-
-      validate_command(command, arguments, 0)
-      @bitmap.show
+      show_bitmap_image(command, arguments)
     else
       raise "Command #{command} is invalid"
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   private
+
+  def create_bitmap(command, arguments)
+    raise 'Bitmap already created' if @bitmap
+
+    validate_command(command, arguments, 2)
+    @bitmap = Bitmap.new(arguments[1].to_i, arguments[0].to_i)
+  end
+
+  def clear_bitmap(command, arguments)
+    raise "Without bitmap can't execute command" unless @bitmap
+
+    validate_command(command, arguments, 0)
+    @bitmap.clear
+  end
+
+  def paint_pixel_on_bitmap(command, arguments)
+    raise "Without bitmap can't execute command" unless @bitmap
+
+    validate_command(command, arguments, 3)
+    @bitmap.paint_pixel(*arguments)
+  end
+
+  def paint_vertical_on_bitmap(command, arguments)
+    raise "Without bitmap can't execute command" unless @bitmap
+
+    validate_command(command, arguments, 4)
+    @bitmap.paint_vertical(*arguments)
+  end
+
+  def paint_horizontal_on_bitmap(command, arguments)
+    raise "Without bitmap can't execute command" unless @bitmap
+
+    validate_command(command, arguments, 4)
+    @bitmap.paint_horizontal(*arguments)
+  end
+
+  def show_bitmap_image(command, arguments)
+    raise "Without bitmap can't execute command" unless @bitmap
+
+    validate_command(command, arguments, 0)
+    @bitmap.show
+  end
 
   def validate_command(command, arguments, number_of_arg)
     return unless arguments.size != number_of_arg

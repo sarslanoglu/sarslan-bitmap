@@ -11,3 +11,11 @@ Metrics/MethodLength:
   Max: 20
 Metrics/BlockLength:
   ExcludedMethods: ['describe', 'context']
+Style/HashEachMethods:
+  Enabled: true
+Style/HashTransformKeys:
+  Description: 'Prefer `transform_keys` over `each_with_object` and `map`.'
+  Enabled: true
+Style/HashTransformValues:
+  Description: 'Prefer `transform_values` over `each_with_object` and `map`.'
+  Enabled: true
