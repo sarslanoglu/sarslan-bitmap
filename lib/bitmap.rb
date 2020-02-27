@@ -34,7 +34,9 @@ class Bitmap
     end
   end
 
-  # Command S
+  def show
+    puts @image.map { |pixel| pixel.join('') }
+  end
 
   private
 

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative '../lib/bitmap'
-require 'awesome_print'
 
 describe 'Bitmap' do
   context '.initialize' do
@@ -142,6 +141,17 @@ describe 'Bitmap' do
       bitmap.paint_horizontal(1, 4, 2, 'B')
       painted_bitmap = [%w[0 0 0 0 0], %w[B B B B 0], %w[0 0 0 0 0]]
       expect(bitmap.instance_variable_get(:@image)).to eq(painted_bitmap)
+    end
+  end
+
+  context '.show' do
+    it 'shows bitmap current image' do
+      bitmap = Bitmap.new(3, 5)
+      bitmap.paint_horizontal(1, 4, 2, 'B')
+      bitmap.paint_vertical(5, 1, 3, 'D')
+      bitmap.paint_pixel(1, 1, 'A')
+
+      expect { bitmap.show }.to output("A000D\nBBBBD\n0000D\n").to_stdout
     end
   end
 end

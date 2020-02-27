@@ -44,9 +44,12 @@ class BitmapEditor
       validate_command(command, arguments, 4)
       @bitmap.paint_horizontal(*arguments)
     when 'S'
-      # Command S
+      raise "Without bitmap can't execute command" unless @bitmap
+
+      validate_command(command, arguments, 0)
+      @bitmap.show
     else
-      raise 'Invalid command'
+      raise "Command #{command} is invalid"
     end
   end
 

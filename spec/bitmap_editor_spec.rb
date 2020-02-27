@@ -15,10 +15,8 @@ describe 'Bitmap Editor' do
   context '.run' do
     it 'should run commands' do
       bitmap_editor = BitmapEditor.new
-      execution = bitmap_editor.run
 
-      # Dummy test. It will be check final image when whole commands are ready
-      expect(execution[1]).to eq('L 1 3 A')
+      expect { bitmap_editor.run }.to output("00000\n00ZZZ\nAW000\n0W000\n0W000\n0W000\n").to_stdout
     end
   end
 
@@ -145,6 +143,36 @@ describe 'Bitmap Editor' do
         painted_bitmap = [%w[0 0 0 0], %w[0 0 0 0], %w[P P P 0]]
         bitmap_editor.execute('H', %w[1 3 3 P])
         expect(image).to eq(painted_bitmap)
+      end
+    end
+
+    context 'S command' do
+      it 'gets ArgumentError when argument size is wrong' do
+        bitmap_editor = BitmapEditor.new
+        bitmap_editor.execute('I', %w[3 3])
+        error_message = 'Command S is accepting 0 arguments. But input file send 2 arguments'
+        expect { bitmap_editor.execute('S', %w[2 3]) }.to raise_error(ArgumentError,
+                                                                      error_message)
+      end
+
+      it 'gets successful with arguments in range' do
+        bitmap_editor = BitmapEditor.new
+        empty_bitmap = [%w[0 0 0 0], %w[0 0 0 0], %w[0 0 0 0]]
+        bitmap_editor.execute('I', %w[4 3])
+        image = bitmap_editor.instance_variable_get(:@bitmap).instance_variable_get(:@image)
+        expect(image).to eq(empty_bitmap)
+        bitmap_editor.execute('H', %w[1 3 3 P])
+
+        expect { bitmap_editor.execute('S', []) }.to output("0000\n0000\nPPP0\n").to_stdout
+      end
+    end
+
+    context 'Unknown command' do
+      it 'gets RuntimeError when bitmap is missing' do
+        bitmap_editor = BitmapEditor.new
+        error_message = 'Command B is invalid'
+        expect { bitmap_editor.execute('B', %w[2 3 6 W]) }.to raise_error(RuntimeError,
+                                                                          error_message)
       end
     end
   end
