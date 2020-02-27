@@ -11,8 +11,6 @@ class BitmapEditor
     end
   end
 
-  private
-
   def read_file
     file = File.open('bin/bitmap_editor_examples/show.txt')
     file.readlines.map(&:chomp)
@@ -21,12 +19,20 @@ class BitmapEditor
   def execute(command, arguments)
     case command
     when 'I'
+      raise 'Bitmap already created' if @bitmap
+
+      validate_command(command, arguments, 2)
       @bitmap = Bitmap.new(arguments[1].to_i, arguments[0].to_i)
-      # Command I
     when 'C'
-      # Command C
+      raise "Without bitmap can't execute command" unless @bitmap
+
+      validate_command(command, arguments, 0)
+      @bitmap.clear
     when 'L'
-      # Command L
+      raise "Without bitmap can't execute command" unless @bitmap
+
+      validate_command(command, arguments, 3)
+      @bitmap.paint_pixel(*arguments)
     when 'V'
       # Command V
     when 'H'
@@ -34,7 +40,15 @@ class BitmapEditor
     when 'S'
       # Command S
     else
-      raise
+      raise 'Invalid command'
+    end
+  end
+
+  private
+
+  def validate_command(command, arguments, number_of_arg)
+    if arguments.size != number_of_arg
+      raise ArgumentError, "Command #{command} is accepting #{number_of_arg} arguments. But input file send #{arguments.size} arguments"
     end
   end
 end
