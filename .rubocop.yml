@@ -5,6 +5,10 @@ AllCops:
     - 'spec/spec_helper.rb'
 Layout/LineLength:
   Max: 100
+Lint/RaiseException:
+  Enabled: true
+Lint/StructNewOverride:
+  Enabled: true
 Metrics/AbcSize:
   Max: 25
 Metrics/MethodLength:
