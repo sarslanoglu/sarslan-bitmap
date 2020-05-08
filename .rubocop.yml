@@ -5,6 +5,8 @@ AllCops:
     - 'spec/spec_helper.rb'
 Layout/LineLength:
   Max: 100
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
 Lint/RaiseException:
   Enabled: true
 Lint/StructNewOverride:
@@ -15,6 +17,8 @@ Metrics/MethodLength:
   Max: 20
 Metrics/BlockLength:
   ExcludedMethods: ['describe', 'context']
+Style/ExponentialNotation:
+  Enabled: true
 Style/HashEachMethods:
   Enabled: true
 Style/HashTransformKeys:
