@@ -16,8 +16,6 @@ class BitmapEditor
     file.readlines.map(&:chomp)
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # Default complexity is 6, below code's complexity is 7
   def execute(command, arguments)
     case command
     when 'I'
@@ -36,7 +34,6 @@ class BitmapEditor
       raise "Command #{command} is invalid"
     end
   end
-  # rubocop:enable Metrics/CyclomaticComplexity
 
   private
 
