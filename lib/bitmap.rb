@@ -34,11 +34,9 @@ class Bitmap
     end
   end
 
-  # rubocop:disable Lint/AmbiguousBlockAssociation
   def show
-    puts @image.map { |pixel| pixel.join('') }
+    puts @image.map(&:join)
   end
-  # rubocop:enable Lint/AmbiguousBlockAssociation
 
   private
 

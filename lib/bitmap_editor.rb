@@ -6,7 +6,7 @@ require_relative 'bitmap'
 class BitmapEditor
   def run
     read_file.each do |line|
-      command, *arguments = line.split(' ')
+      command, *arguments = line.split
       execute(command, arguments)
     end
   end
