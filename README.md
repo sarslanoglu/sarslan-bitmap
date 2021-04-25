@@ -13,12 +13,12 @@ cd sarslan-bitmap
 ruby -v
 ```
 
-The ouput should start with something like `ruby 2.7.2`
+The ouput should be `ruby 3.0.0`
 
 If not, install the right ruby version using [rvm](https://github.com/rvm/rvm) (it could take a while):
 
 ```shell
-rvm install 2.7.2
+rvm install 3.0.0
 ```
 
 ### Install dependencies
