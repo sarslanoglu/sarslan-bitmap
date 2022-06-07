@@ -83,6 +83,6 @@ class BitmapEditor
     return unless arguments.size != number_of_arg
 
     raise ArgumentError, "Command #{command} is accepting #{number_of_arg} arguments."\
-    " But input file send #{arguments.size} arguments"
+                         " But input file send #{arguments.size} arguments"
   end
 end
