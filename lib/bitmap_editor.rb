@@ -82,7 +82,7 @@ class BitmapEditor
   def validate_command(command, arguments, number_of_arg)
     return unless arguments.size != number_of_arg
 
-    raise ArgumentError, "Command #{command} is accepting #{number_of_arg} arguments."\
-                         " But input file send #{arguments.size} arguments"
+    raise ArgumentError, "Command #{command} is accepting #{number_of_arg} arguments. " \
+                         "But input file send #{arguments.size} arguments"
   end
 end
